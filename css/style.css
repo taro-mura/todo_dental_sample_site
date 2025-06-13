@@ -337,6 +337,13 @@ a {
     grid-template-columns: 1fr;
     gap: 1.5625rem;
 }
+.pain-grid a{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5625rem;
+}
+
+
 
 .pain-item {
     background: white;
@@ -473,15 +480,23 @@ a {
 @media (min-width: 768px) {
     /* 1番目の医師：写真左、テキスト右 */
     .doctor-profile {
-        grid-template-columns: 12.5rem 1fr;
+        grid-template-columns: 1fr 12.5rem;
         align-items: center;
     }
     
     /* 2番目の医師：写真右、テキスト左 */
-    .expertise-content:nth-child(2) .doctor-profile {
+    .expertise-content.doctor-profile {
         grid-template-columns: 1fr 12.5rem;
     }
+
     
+    /* .expertise-content:nth-child(1) .doctor-profile {
+        grid-template-columns: 1fr 12.5rem;
+    }
+    .expertise-content:nth-child(2) .doctor-profile {
+        grid-template-columns: 1fr 12.5rem;
+    } */
+
     .doctor-info h3 {
         text-align: left;
     }
@@ -559,7 +574,6 @@ a {
     padding: 1.5625rem;
     background: #f8f9fa;
     border-radius: 0.625rem;
-    /* display: grid; */
     display: flex;
     flex-direction: column;
     grid-template-columns: 1fr 1fr;
@@ -577,7 +591,7 @@ a {
 
 .schedule-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     gap: 0.3125rem;
     margin-bottom: 0.9375rem;
 }
@@ -588,6 +602,10 @@ a {
     border-radius: 0.25rem;
     font-size: 0.875rem;
     font-weight: 600;
+}
+
+.day.week{
+    background-color: none;
 }
 
 .day.active {
@@ -1404,11 +1422,11 @@ a {
     }
     
     .solution-item:nth-child(even) .solution-image {
-        order: 2;
+        order: 1;
     }
     
     .solution-item:nth-child(even) .solution-content {
-        order: 1;
+        order: 2;
     }
     
     .doctor-profile {
@@ -1429,17 +1447,11 @@ a {
 }
     
     /* 2番目の医師紹介は写真を右側に */
-    .expertise-content:nth-child(2) .doctor-profile {
+    .expertise-content.doctor-profile {
         grid-template-columns: 1fr 12.5rem;
     }
     
-    .expertise-content:nth-child(2) .doctor-image {
-        order: 2;
-    }
-    
-    .expertise-content:nth-child(2) .doctor-info {
-        order: 1;
-    }
+ 
     
     .doctor-info h3 {
         text-align: left;
@@ -1506,7 +1518,7 @@ a {
 }
 
 /* デスクトップ対応 (1024px以上) */
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
     .hero-title {
         font-size: 3rem;
     }
@@ -1550,7 +1562,7 @@ a {
         height: 2rem;
         font-size: 0.875rem;
     }
-}
+} */
 
 /* アニメーション */
 @keyframes fadeInUp {
@@ -2361,8 +2373,8 @@ section {
     }
 }
 
-/* デスクトップ対応 (64rem以上) */
-@media (min-width: 64rem) {
+/* デスクトップ対応 (1024px以上) */
+@media (min-width: 1024px) {
     .treatment-grid {
         grid-template-columns: repeat(2, 1fr);
     }
