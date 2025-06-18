@@ -1,6 +1,198 @@
 // DOM読み込み完了後に実行
 document.addEventListener('DOMContentLoaded', function() {
     
+    // 共通ヘッダーの読み込み
+    const headerPlaceholder = document.getElementById('header-placeholder');
+    if (headerPlaceholder) {
+        fetch('./header.html')
+            .then(response => {
+                console.log('Header fetch response:', response.status, response.statusText);
+                if (!response.ok) {
+                    throw new Error(`Header file not found: ${response.status} ${response.statusText}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                headerPlaceholder.innerHTML = data;
+                
+                // ヘッダー読み込み後に少し待ってから初期化
+                setTimeout(() => {
+                    initializeHeaderFunctionality();
+                }, 100);
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
+                // フォールバック: 基本的なヘッダーを表示
+                headerPlaceholder.innerHTML = `
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <div class="header-left">
+                <h1 class="logo">
+                    <a href="index.html">轟歯科</a>
+                </h1>
+                <div class="header-keywords">
+                    <span class="keyword-tag">須坂市</span>
+                    <span class="keyword-tag">土日診療</span>
+                    <span class="keyword-tag">口腔外科専門医</span>
+                </div>
+            </div>
+            <!-- デスクトップメニュー -->
+            <nav class="header-nav desktop-nav">
+                <ul class="nav-menu">
+                    <li><a href="index.html">ホーム</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-dropdown-toggle">診療メニュー <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="general-dentistry.html">一般歯科</a></li>
+                            <li><a href="oral-surgery.html">口腔外科</a></li>
+                            <li><a href="implant.html">インプラント</a></li>
+                            <li><a href="pediatric-dentistry.html">小児歯科</a></li>
+                            <li><a href="whitening.html">ホワイトニング</a></li>
+                            <li><a href="orthodontics.html">歯列矯正</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#about">医院について</a></li>
+                    <li><a href="index.html#access">アクセス</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-contact">
+                <div class="tel">
+                    
+                    <a href="tel:026-245-0126" class="tel-number">026-245-0126</a>
+                </div>
+            </div>
+        </div>
+    </div>
+            <!-- ハンバーガーメニューボタン -->
+            <button class="hamburger-menu" aria-label="メニューを開く">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+    <!-- モバイルメニュー -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-content">
+            <ul class="mobile-nav-menu">
+                <li><a href="index.html">ホーム</a></li>
+                <li class="mobile-nav-section">
+                    <h3>診療メニュー</h3>
+                    <ul class="mobile-nav-submenu">
+                        <li><a href="general-dentistry.html">一般歯科・虫歯治療</a></li>
+                        <li><a href="oral-surgery.html">口腔外科</a></li>
+                        <li><a href="implant.html">インプラント治療</a></li>
+                        <li><a href="pediatric-dentistry.html">小児歯科</a></li>
+                        <li><a href="whitening.html">ホワイトニング</a></li>
+                        <li><a href="orthodontics.html">歯列矯正</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html#about">医院について</a></li>
+                <li><a href="index.html#access">アクセス・診療時間</a></li>
+                <li class="mobile-nav-cta">
+                    <a href="tel:026-245-0126" class="mobile-tel-button">
+                        📞 026-245-0126
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+                `;
+             // フォールバック後でも初期化を実行
+                setTimeout(() => {
+                initializeHeaderFunctionality();
+                }, 100);
+            });
+    }
+    
+    // ヘッダー機能の初期化（ヘッダー読み込み後に実行）
+    function initializeHeaderFunctionality() {
+        // ハンバーガーメニューの機能
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        const mobileNav = document.querySelector('.mobile-nav');
+        
+        console.log('Hamburger menu element:', hamburgerMenu);
+        console.log('Mobile nav element:', mobileNav);
+        
+        if (hamburgerMenu && mobileNav) {
+            console.log('Setting up hamburger menu functionality');
+            hamburgerMenu.addEventListener('click', function() {
+                console.log('Hamburger menu clicked');
+                // ハンバーガーメニューボタンとモバイルナビの切り替え
+                hamburgerMenu.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+                
+                // ボディのスクロールを制御
+                if (mobileNav.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // モバイルナビ背景クリックで閉じる
+            mobileNav.addEventListener('click', function(e) {
+                if (e.target === mobileNav) {
+                    hamburgerMenu.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // モバイルナビ内のリンククリックで閉じる
+            const mobileNavLinks = mobileNav.querySelectorAll('a');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    hamburgerMenu.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+        } else {
+            console.error('Hamburger menu or mobile nav not found:', {
+                hamburgerMenu: !!hamburgerMenu,
+                mobileNav: !!mobileNav
+            });
+        }
+        
+        // デスクトップドロップダウンメニューの制御
+        const dropdownToggles = document.querySelectorAll('.nav-dropdown-toggle');
+        console.log('Dropdown toggles found:', dropdownToggles.length);
+        
+        dropdownToggles.forEach(toggle => {
+            const dropdown = toggle.closest('.nav-dropdown');
+            
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('Dropdown toggle clicked');
+                
+                // 他のドロップダウンを閉じる
+                dropdownToggles.forEach(otherToggle => {
+                    const otherDropdown = otherToggle.closest('.nav-dropdown');
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active', 'clicked');
+                    }
+                });
+                
+                // 現在のドロップダウンを切り替え
+                dropdown.classList.toggle('active');
+                dropdown.classList.add('clicked'); // クリックされたことを示すクラス
+            });
+        });
+        
+        // ドロップダウン外をクリックしたら閉じる
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-dropdown')) {
+                dropdownToggles.forEach(toggle => {
+                    const dropdown = toggle.closest('.nav-dropdown');
+                    dropdown.classList.remove('active', 'clicked');
+                });
+            }
+        });
+    }
+    
     // FAQアコーディオン機能
     const faqItems = document.querySelectorAll('.faq-item');
     
@@ -170,6 +362,55 @@ document.addEventListener('DOMContentLoaded', function() {
             animationObserver.observe(element);
         });
     }
+    
+    // ホワイトニングページのタブ切り替え機能
+    const flowTabs = document.querySelectorAll('.flow-tab');
+    const flowContents = document.querySelectorAll('.flow-content');
+    
+    flowTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            
+            // 全てのタブから active クラスを削除
+            flowTabs.forEach(t => t.classList.remove('active'));
+            // 全てのコンテンツから active クラスを削除
+            flowContents.forEach(content => content.classList.remove('active'));
+            
+            // クリックされたタブに active クラスを追加
+            this.classList.add('active');
+            
+            // 対応するコンテンツに active クラスを追加
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+    
+    // 歯列矯正ページの年齢別タブ切り替え機能
+    const ageTabs = document.querySelectorAll('.age-tab');
+    const ageContents = document.querySelectorAll('.age-content');
+    
+    ageTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            
+            // 全てのタブから active クラスを削除
+            ageTabs.forEach(t => t.classList.remove('active'));
+            // 全てのコンテンツから active クラスを削除
+            ageContents.forEach(content => content.classList.remove('active'));
+            
+            // クリックされたタブに active クラスを追加
+            this.classList.add('active');
+            
+            // 対応するコンテンツに active クラスを追加
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+    
     
     // 現在時刻に基づく診療状況表示
     function updateClinicStatus() {
