@@ -25,7 +25,79 @@ document.addEventListener('DOMContentLoaded', function() {
                 // フォールバック: 基本的なヘッダーを表示
                 headerPlaceholder.innerHTML = `
 <header class="header">
-    
+    <div class="container">
+        <div class="header-content">
+            <div class="header-left">
+                <h1 class="logo">
+                    <a href="index.html">轟歯科</a>
+                </h1>
+                <div class="header-keywords">
+                    <span class="keyword-tag">須坂市</span>
+                    <span class="keyword-tag">土日診療</span>
+                    <span class="keyword-tag">口腔外科専門医</span>
+                </div>
+            </div>
+            <!-- デスクトップメニュー -->
+            <nav class="header-nav desktop-nav">
+                <ul class="nav-menu">
+                    <li><a href="index.html">ホーム</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-dropdown-toggle">診療メニュー <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="general-dentistry.html">一般歯科</a></li>
+                            <li><a href="oral-surgery.html">口腔外科</a></li>
+                            <li><a href="implant.html">インプラント</a></li>
+                            <li><a href="pediatric-dentistry.html">小児歯科</a></li>
+                            <li><a href="whitening.html">ホワイトニング</a></li>
+                            <li><a href="orthodontics.html">歯列矯正</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#about">医院について</a></li>
+                    <li><a href="index.html#access">アクセス</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-contact">
+                <div class="tel">
+                    
+                    <a href="tel:026-248-1391" class="tel-number">026-248-1391</a>
+                </div>
+            </div>
+        </div>
+    </div>
+            <!-- ハンバーガーメニューボタン -->
+            <button class="hamburger-menu" aria-label="メニューを開く">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+    <!-- モバイルメニュー -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-content">
+            <ul class="mobile-nav-menu">
+                <li><a href="index.html">ホーム</a></li>
+                <li class="mobile-nav-section">
+                    <h3>診療メニュー</h3>
+                    <ul class="mobile-nav-submenu">
+                        <li><a href="general-dentistry.html">一般歯科・虫歯治療</a></li>
+                        <li><a href="oral-surgery.html">口腔外科</a></li>
+                        <li><a href="implant.html">インプラント治療</a></li>
+                        <li><a href="pediatric-dentistry.html">小児歯科</a></li>
+                        <li><a href="whitening.html">ホワイトニング</a></li>
+                        <li><a href="orthodontics.html">歯列矯正</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html#about">医院について</a></li>
+                <li><a href="index.html#access">アクセス・診療時間</a></li>
+                <li class="mobile-nav-cta">
+                    <a href="tel:026-248-1391" class="mobile-tel-button">
+                        📞 026-248-1391
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </header>
                 `;
              // フォールバック後でも初期化を実行
@@ -348,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const minute = now.getMinutes();
         const currentTime = hour * 60 + minute;
         
-        const morningStart = 9 * 60; // 9:00
+        const morningStart = 9 * 60; // 9:30
         const morningEnd = 12 * 60 + 30; // 12:30
         const afternoonStart = 14 * 60; // 14:00
         const weekdayEnd = 18 * 60; // 18:00（平日）
