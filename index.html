@@ -42,7 +42,7 @@
 </head>
 <body>
     <!-- 固定予約ボタン -->
-    <div class="fixed-cta">
+    <!-- <div class="fixed-cta">
         <a href="tel:026-245-0126" class="cta-phone">
             <span class="cta-icon">📞</span>
             電話で予約
@@ -51,29 +51,10 @@
             <span class="cta-icon">📝</span>
             Web予約
         </a>
-    </div>
+    </div> -->
 
-    <!-- ヘッダー -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="header-left">
-                    <h1 class="logo">轟歯科</h1>
-                    <div class="header-keywords">
-                        <span class="">須坂市で土日診療をしている歯科医院です。</span>
-                        <!-- <span class="keyword-tag">土日診療</span>
-                        <span class="keyword-tag">口腔外科専門医</span> -->
-                    </div>
-                </div>
-                <div class="header-contact">
-                    <div class="tel">
-                        <span class="tel-label" style="font-weight: 600;">正確にお話を伺うためにお電話で予約を受け付けております</span>
-                        <a href="tel:026-245-0126" class="tel-number">026-245-0126</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- ヘッダー（共通化） -->
+    <div id="header-placeholder"></div>
 
     <main>
         <!-- Hero Section -->
@@ -82,7 +63,7 @@
                 <div class="hero-content">
                     <div class="hero-text">
                         <h2 class="hero-title">
-                            須坂市で<span class="accent">土日も18:30</span>まで診療<br>
+                            須坂市で<span class="accent">土日も18:00</span>まで診療<br>
                             やさしい<span class="accent">専門医・認定医が</span><br>
                             <span class="accent">悩みを</span>解決します
                         </h2>
@@ -93,13 +74,13 @@
                             </div>
                             <div class="feature-item">
                                 <span class="feature-icon"></span>
-                                <span>他院で難しい<br>と言われた</span>
+                                <span>他院で難しい<br>と言われた抜歯</span>
                             </div>
                             <div class="feature-item">
                                 <span class="feature-icon"></span>
                                 <span>子どもの<br>歯のトラブル</span>
                             </div>
-                            <div class="feature-item">
+                            <div class="feature-item today">
                                 <span class="feature-icon"></span>
                                 <span>当日予約OK</span>
                             </div>
@@ -143,7 +124,7 @@
                             <div class="pain-icon">
                                 <img src="img/pain_icon_child.png">
                             </div>
-                            <h3>子どもと一緒に通いたい</h3>
+                            <h3>子どもも一緒に通いたい</h3>
                             <p>・小さな子どもの治療の経験が豊富な歯医者を探している<br></p>
                         </div>
                     </a>
@@ -287,7 +268,7 @@
                                 <span class="day active">水</span>
                                 <span class="day active">木</span>
                                 <span class="day inactive">金</span>
-                                <span class="day active">土※</span>
+                                <span class="day active">土</span>
                                 <span class="day active">日</span>
                             </div>
                             <div class="schedule-grid">
@@ -297,7 +278,7 @@
                                 <span class="day active">水</span>
                                 <span class="day active">木</span>
                                 <span class="day inactive">金</span>
-                                <span class="day active">土※</span>
+                                <span class="day active">土</span>
                                 <span class="day active">日</span>
                             </div>
                         </div>
