@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // ヘッダー読み込み後に少し待ってから初期化
                 setTimeout(() => {
                     initializeHeaderFunctionality();
+                    initializeScrollHeader();
                 }, 100);
             })
             .catch(error => {
@@ -25,84 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 // フォールバック: 基本的なヘッダーを表示
                 headerPlaceholder.innerHTML = `
 <header class="header">
-    <div class="container">
-        <div class="header-content">
-            <div class="header-left">
-                <h1 class="logo">
-                    <a href="index.html">轟歯科</a>
-                </h1>
-                <div class="header-keywords">
-                    <span class="keyword-tag">須坂市</span>
-                    <span class="keyword-tag">土日診療</span>
-                    <span class="keyword-tag">口腔外科専門医</span>
-                </div>
-            </div>
-            <!-- デスクトップメニュー -->
-            <nav class="header-nav desktop-nav">
-                <ul class="nav-menu">
-                    <li><a href="index.html">ホーム</a></li>
-                    <li class="nav-dropdown">
-                        <a href="#" class="nav-dropdown-toggle">診療メニュー <span class="dropdown-arrow">▼</span></a>
-                        <ul class="nav-dropdown-menu">
-                            <li><a href="general-dentistry.html">一般歯科</a></li>
-                            <li><a href="oral-surgery.html">口腔外科</a></li>
-                            <li><a href="implant.html">インプラント</a></li>
-                            <li><a href="pediatric-dentistry.html">小児歯科</a></li>
-                            <li><a href="whitening.html">ホワイトニング</a></li>
-                            <li><a href="orthodontics.html">歯列矯正</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="index.html#about">医院について</a></li>
-                    <li><a href="index.html#access">アクセス</a></li>
-                </ul>
-            </nav>
 
-            <div class="header-contact">
-                <div class="tel">
-                    
-                    <a href="tel:026-248-1391" class="tel-number">026-248-1391</a>
-                </div>
-            </div>
-        </div>
-    </div>
-            <!-- ハンバーガーメニューボタン -->
-            <button class="hamburger-menu" aria-label="メニューを開く">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-
-    <!-- モバイルメニュー -->
-    <nav class="mobile-nav">
-        <div class="mobile-nav-content">
-            <ul class="mobile-nav-menu">
-                <li><a href="index.html">ホーム</a></li>
-                <li class="mobile-nav-section">
-                    <h3>診療メニュー</h3>
-                    <ul class="mobile-nav-submenu">
-                        <li><a href="general-dentistry.html">一般歯科・虫歯治療</a></li>
-                        <li><a href="oral-surgery.html">口腔外科</a></li>
-                        <li><a href="implant.html">インプラント治療</a></li>
-                        <li><a href="pediatric-dentistry.html">小児歯科</a></li>
-                        <li><a href="whitening.html">ホワイトニング</a></li>
-                        <li><a href="orthodontics.html">歯列矯正</a></li>
-                    </ul>
-                </li>
-                <li><a href="index.html#about">医院について</a></li>
-                <li><a href="index.html#access">アクセス・診療時間</a></li>
-                <li class="mobile-nav-cta">
-                    <a href="tel:026-248-1391" class="mobile-tel-button">
-                        📞 026-248-1391
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
 </header>
                 `;
              // フォールバック後でも初期化を実行
                 setTimeout(() => {
                 initializeHeaderFunctionality();
+                initializeScrollHeader();
                 }, 100);
             });
     }
@@ -287,23 +217,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // スクロールに応じたヘッダーの表示制御
-    let lastScrollTop = 0;
-    const header = document.querySelector('.header');
-    
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    // スクロールに応じたヘッダーの表示制御を初期化（ヘッダー読み込み後に実行）
+    function initializeScrollHeader() {
+        let lastScrollTop = 0;
+        const header = document.querySelector('.header');
         
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
-            // 下にスクロール時はヘッダーを隠す
-            header.style.transform = 'translateY(-100%)';
+        console.log('initializeScrollHeader called, header found:', !!header);
+        
+        if (header) {
+            console.log('Adding scroll event listener for header');
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                console.log('Scroll event:', scrollTop, 'lastScrollTop:', lastScrollTop);
+                
+                if (scrollTop > lastScrollTop && scrollTop > 50) {
+                    // 下にスクロール時はヘッダーを隠す
+                    console.log('Hiding header');
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    // 上にスクロール時はヘッダーを表示
+                    console.log('Showing header');
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+            });
         } else {
-            // 上にスクロール時はヘッダーを表示
-            header.style.transform = 'translateY(0)';
+            console.error('Header element not found for scroll control');
         }
-        
-        lastScrollTop = scrollTop;
-    });
+    }
     
     // 固定CTAボタンの表示制御（モバイルのみ）
     const fixedCta = document.querySelector('.fixed-cta');
@@ -327,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const images = document.querySelectorAll('img[data-src]');
     
     if (images.length > 0) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
+        const imageObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
